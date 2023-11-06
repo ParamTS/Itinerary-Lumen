@@ -1,28 +1,31 @@
 <?php
+define('PHP_START', microtime(true));
 
-/*
-|--------------------------------------------------------------------------
-| Create The Application
-|--------------------------------------------------------------------------
-|
-| First we need to get an application instance. This creates an instance
-| of the application / container and bootstraps the application so it
-| is ready to receive HTTP / Console requests from the environment.
-|
-*/
+use Cubex\Cubex;
+use Project\Context\ItineraryContext;
+use Project\DefaultApplication;
+use Whoops\Handler\PrettyPageHandler;
+use Whoops\Run;
 
-$app = require __DIR__.'/../bootstrap/app.php';
-
-/*
-|--------------------------------------------------------------------------
-| Run The Application
-|--------------------------------------------------------------------------
-|
-| Once we have the application, we can handle the incoming request
-| through the kernel, and send the associated response back to
-| the client's browser allowing them to enjoy the creative
-| and wonderful application we have prepared for them.
-|
-*/
-
-$app->run();
+$loader = require_once(dirname(__DIR__) . '/vendor/autoload.php');
+try
+{
+  //Create a global Cubex instance, using SkeletonContext
+  $cubex = Cubex::withCustomContext(ItineraryContext::class, dirname(__DIR__), $loader);
+  //Handle the incoming request through "DefaultApplication"
+  $cubex->handle(new DefaultApplication($cubex));
+}
+catch(Throwable $e)
+{
+  $handler = new Run();
+  $handler->pushHandler(new PrettyPageHandler());
+  $handler->handleException($e);
+}
+finally
+{
+  if($cubex instanceof Cubex)
+  {
+    //Call the shutdown command
+    $cubex->shutdown();
+  }
+}

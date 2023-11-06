@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "dependencies": {
+    "autoprefixer": "^10.4.16",
+    "jquery": "^3.7.1",
+    "jsdom": "^22.1.0",
+    "pixrem": "^5.0.0",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-scss": "^4.0.0",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "@rollup/plugin-alias": "^5.0.1",
+    "@rollup/plugin-json": "^6.0.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "gulp": "^4.0.2",
+    "gulp-postcss": "^9.0.1",
+    "postcss": "^8.4.31",
+    "postcss-pxtorem": "^6.0.0",
+    "rollup": "^4.3.0",
+    "sass": "^1.69.5",
+    "tslib": "^2.6.2"
+  },
+  "scripts": {
+    "build": "rollup --config"
+  }
+}
